@@ -1,7 +1,10 @@
 {
-  "buildCommand": "cd frontend && npm run build",
+  "buildCommand": "cd frontend && npm install && npm run build",
   "installCommand": "cd frontend && npm install",
   "outputDirectory": "dist",
   "framework": "react",
-  "nodeVersion": "18.x"
+  "nodeVersion": "18.x",
+  "env": {
+    "CI": "true"
+  }
 }
