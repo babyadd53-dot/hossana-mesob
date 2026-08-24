@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal | Hossana Mesob One</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+  <script src="admin.js" defer></script>
+</head>
+<body>
+
+  <!-- LOGIN VIEW -->
+  <div class="login-view" id="loginView">
+    <form class="login-card" id="loginForm">
+      <div class="login-emblem"><img src="/assets/logo.jpg" alt="Mesob One logo"></div>
+      <h1 data-en="Mesob One Admin" data-am="መሶብ አንድ አስተዳደር">Mesob One Admin</h1>
+      <p class="sub" data-en="Staff portal — sign in to continue" data-am="የሠራተኛ መግቢያ — ለመቀጠል ይግቡ">Staff portal — sign in to continue</p>
+      <div class="field">
+        <label for="loginUser" data-en="Username" data-am="የተጠቃሚ ስም">Username</label>
+        <input type="text" id="loginUser" autocomplete="username" required placeholder="admin">
+      </div>
+      <div class="field">
+        <label for="loginPass" data-en="Password" data-am="የይለፍ ቃል">Password</label>
+        <input type="password" id="loginPass" autocomplete="current-password" required placeholder="••••••••">
+      </div>
+      <p class="login-error" id="loginError" hidden></p>
+      <button type="submit" class="btn primary full" id="loginBtn" data-en="Sign In" data-am="ግባ">Sign In</button>
+      <a class="back-link" href="/" data-en="← Back to website" data-am="← ወደ ድረ-ገጹ ተመለስ">← Back to website</a>
+    </form>
+  </div>
+
+  <!-- APP VIEW -->
+  <div class="app-view" id="appView" hidden>
+    <aside class="sidebar">
+      <div class="side-brand"><span class="emblem">🏛️</span><span data-en="Mesob One" data-am="መሶብ አንድ">Mesob One</span></div>
+      <nav class="side-nav">
+        <button class="side-link active" data-view="dashboard">📊 <span data-en="Dashboard" data-am="ዳሽቦርድ">Dashboard</span></button>
+        <button class="side-link" data-view="news">📰 <span data-en="News &amp; Posts" data-am="ዜናዎች">News &amp; Posts</span></button>
+        <button class="side-link" data-view="leadership">👥 <span data-en="Leadership" data-am="አመራር">Leadership</span></button>
+        <button class="side-link" data-view="downloads">📂 <span data-en="Downloads" data-am="ማውረጃዎች">Downloads</span></button>
+        <button class="side-link" data-view="feedback">💬 <span data-en="Feedback" data-am="አስተያየቶች">Feedback</span><span class="badge-dot" id="unreadBadge" hidden></span></button>
+        <button class="side-link" data-view="gallery">🖼️ <span data-en="Gallery" data-am="ማዕከለ-ስዕል">Gallery</span></button>
+        <button class="side-link" data-view="settings">⚙️ <span data-en="Settings" data-am="ቅንብሮች">Settings</span></button>
+      </nav>
+      <div class="side-foot">
+        <button class="btn ghost small" id="themeBtn">🌙 <span data-en="Theme" data-am="ገጽታ">Theme</span></button>
+        <button class="btn danger small" id="logoutBtn" data-en="Log out" data-am="ውጣ">Log out</button>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="top-strip">
+        <h2 id="viewTitle">Dashboard</h2>
+        <span class="whoami" id="whoami"></span>
+      </header>
+
+      <!-- DASHBOARD -->
+      <section class="view" id="view-dashboard">
+        <div class="stat-cards" id="statCards"></div>
+        <div class="hint-card" data-en="Tip: use the sections on the left to manage news posts, leadership members, downloadable files, citizen feedback and the hero gallery." data-am="ፍንጭ፦ በግራ በኩል ያሉትን ክፍሎች በመጠቀም ዜናዎችን፣ አመራርን፣ ፋይሎችን፣ የዜጎች አስተያየቶችንና ማዕከለ-ስዕልን ያስተዳድሩ።">Tip: use the sections on the left to manage everything.</div>
+      </section>
+
+      <!-- NEWS -->
+      <section class="view" id="view-news" hidden>
+        <form class="editor-card" id="newsForm">
+          <h3 data-en="Create / Edit Post" data-am="ዜና ፍጠር / አርትዕ">Create / Edit Post</h3>
+          <input type="hidden" id="news-id">
+          <div class="grid-2col">
+            <div class="field"><label>Title (EN)</label><input id="news-title" required maxlength="200"></div>
+            <div class="field"><label>ርዕስ (AM)</label><input id="news-title_am" maxlength="200"></div>
+            <div class="field"><label>Category</label>
+              <select id="news-category">
+                <option value="reform">Reform / ሪፎርም</option>
+                <option value="service">Service / አገልግሎት</option>
+                <option value="announcement">Announcement / ማስታወቂያ</option>
+                <option value="update">Update / ዝማኔ</option>
+              </select>
+            </div>
+            <div class="field"><label>Image URL <small>(or upload below)</small></label><input id="news-image_url" placeholder="/uploads/..."></div>
+          </div>
+          <div class="field"><label>Content (EN)</label><textarea id="news-content" rows="4" required></textarea></div>
+          <div class="field"><label>ይዘት (AM)</label><textarea id="news-content_am" rows="4"></textarea></div>
+          <div class="upload-row">
+            <label class="btn ghost small file-btn">📎 Upload image<input type="file" id="news-file" accept="image/*" hidden data-kind="image" data-target="news-image_url"></label>
+          </div>
+          <div class="actions">
+            <button type="submit" class="btn primary" data-en="Save Post" data-am="አስቀምጥ">Save Post</button>
+            <button type="button" class="btn ghost" id="news-reset" data-en="Clear" data-am="አጽዳ">Clear</button>
+          </div>
+        </form>
+        <div class="table-wrap"><table id="newsTable"></table></div>
+      </section>
+
+      <!-- LEADERSHIP -->
+      <section class="view" id="view-leadership" hidden>
+        <form class="editor-card" id="leaderForm">
+          <h3 data-en="Add / Edit Member" data-am="አባሪ ጨምር / አርትዕ">Add / Edit Member</h3>
+          <input type="hidden" id="leader-id">
+          <div class="grid-2col">
+            <div class="field"><label>Name (EN)</label><input id="leader-name" required maxlength="120"></div>
+            <div class="field"><label>ስም (AM)</label><input id="leader-name_am" maxlength="120"></div>
+            <div class="field"><label>Position (EN)</label><input id="leader-position" required maxlength="120"></div>
+            <div class="field"><label>ርዕስ (AM)</label><input id="leader-position_am" maxlength="120"></div>
+            <div class="field"><label>Photo URL <small>(or upload below)</small></label><input id="leader-photo_url" placeholder="/uploads/..."></div>
+            <div class="field"><label>Order</label><input id="leader-order_num" type="number" min="0" value="0"></div>
+          </div>
+          <div class="upload-row">
+            <label class="btn ghost small file-btn">📷 Upload photo<input type="file" id="leader-file" accept="image/*" hidden data-kind="image" data-target="leader-photo_url"></label>
+          </div>
+          <div class="actions">
+            <button type="submit" class="btn primary" data-en="Save Member" data-am="አስቀምጥ">Save Member</button>
+            <button type="button" class="btn ghost" id="leader-reset" data-en="Clear" data-am="አጽዳ">Clear</button>
+          </div>
+        </form>
+        <div class="table-wrap"><table id="leaderTable"></table></div>
+      </section>
+
+      <!-- DOWNLOADS -->
+      <section class="view" id="view-downloads" hidden>
+        <form class="editor-card" id="downloadForm">
+          <h3 data-en="Add / Edit File" data-am="ፋይል ጨምር / አርትዕ">Add / Edit File</h3>
+          <input type="hidden" id="dl-id">
+          <div class="grid-2col">
+            <div class="field"><label>Title (EN)</label><input id="dl-title" required maxlength="200"></div>
+            <div class="field"><label>ርዕስ (AM)</label><input id="dl-title_am" maxlength="200"></div>
+            <div class="field"><label>Category</label>
+              <select id="dl-category">
+                <option value="forms">Forms / ቅጾች</option>
+                <option value="guidelines">Guidelines / መመሪያዎች</option>
+                <option value="regulations">Regulations / ደንቦች</option>
+              </select>
+            </div>
+            <div class="field"><label>Icon</label><input id="dl-icon" maxlength="8" value="📄"></div>
+            <div class="field"><label>File URL <small>(or upload below)</small></label><input id="dl-file_url" placeholder="/uploads/..."></div>
+            <div class="field"><label>Description</label><input id="dl-description" maxlength="300"></div>
+          </div>
+          <div class="upload-row">
+            <label class="btn ghost small file-btn">📤 Upload file<input type="file" id="dl-file" hidden data-kind="file" data-target="dl-file_url"></label>
+          </div>
+          <div class="actions">
+            <button type="submit" class="btn primary" data-en="Save File" data-am="አስቀምጥ">Save File</button>
+            <button type="button" class="btn ghost" id="dl-reset" data-en="Clear" data-am="አጽዳ">Clear</button>
+          </div>
+        </form>
+        <div class="table-wrap"><table id="downloadTable"></table></div>
+      </section>
+
+      <!-- FEEDBACK -->
+      <section class="view" id="view-feedback" hidden>
+        <div class="feedback-layout">
+          <div class="fb-list-wrap">
+            <div class="list-head"><h3 data-en="Inbox" data-am="የመልዕክት ሳጥን">Inbox</h3>
+              <label class="chk"><input type="checkbox" id="showReadOnly"> <span data-en="Unread only" data-am="ያልተነበቡ ብቻ">Unread only</span></label>
+            </div>
+            <div class="fb-list" id="feedbackList"></div>
+          </div>
+          <div class="editor-card fb-detail" id="feedbackDetail" hidden>
+            <h3 id="fb-subject"></h3>
+            <p class="fb-meta" id="fb-meta"></p>
+            <p class="fb-body" id="fb-body"></p>
+            <div class="field"><label data-en="Reply" data-am="ምላሽ">Reply</label><textarea id="fb-reply" rows="5"></textarea></div>
+            <div class="actions">
+              <button class="btn primary" id="fb-saveReply" data-en="Save Reply &amp; Mark Read" data-am="ምላሽ አስቀምጥ">Save Reply &amp; Mark Read</button>
+              <button class="btn danger" id="fb-delete" data-en="Delete" data-am="አጥፋ">Delete</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GALLERY -->
+      <section class="view" id="view-gallery" hidden>
+        <div class="editor-card">
+          <h3 data-en="Upload Hero Images" data-am="የሂሮ ምስሎች ጫን">Upload Hero Images</h3>
+          <p class="muted" data-en="Uploaded images are stored under /uploads and listed for use across the site." data-am="የተጫኑ ምስሎች ማስቀመጫ ላይ ተቀምጠው በድረ-ገጹ ውስጥ ጥቅም ላይ ይዋላሉ።">Uploaded images are stored under /uploads.</p>
+          <div class="upload-row">
+            <label class="btn primary file-btn">🖼️ Upload image(s)<input type="file" id="galleryFile" accept="image/*" multiple hidden></label>
+          </div>
+        </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="view" id="view-settings" hidden>
+        <form class="editor-card narrow" id="settingsForm">
+          <h3 data-en="Change Password" data-am="የይለፍ ቃል ቀይር">Change Password</h3>
+          <div class="field"><label data-en="Current password" data-am="ነባር የይለፍ ቃል">Current password</label><input type="password" id="set-current" required autocomplete="current-password"></div>
+          <div class="field"><label data-en="New password (min 6 chars)" data-am="አዲስ የይለፍ ቃል (ቢያንስ 6)">New password (min 6 chars)</label><input type="password" id="set-new" required minlength="6" autocomplete="new-password"></div>
+          <div class="field"><label data-en="Confirm new password" data-am="አዲሱን አረጋግጥ">Confirm new password</label><input type="password" id="set-confirm" required minlength="6" autocomplete="new-password"></div>
+          <div class="actions"><button type="submit" class="btn primary" data-en="Update Password" data-am="አዘምን">Update Password</button></div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast-stack" id="toastStack"></div>
+</body>
+</html>

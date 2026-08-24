@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesob One | Hossana Digital Public Service Center</title>
+  <meta name="description" content="Access government services online under one digital roof. Fast, secure, and transparent digital center in Hossana, Central Ethiopia.">
+  <meta name="keywords" content="Mesob One, Hossana, Digital ID, Fayda ID, Government Services, Ethiopia Public Service, Trade License, CBE Bank, Ethiopost">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+
+  <!-- READING PROGRESS BAR -->
+  <div class="read-progress" id="readProgress"></div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-stack" id="toastStack"></div>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="inner">
+      <div class="topbar-info">
+        <span data-en="📍 Hossana, Hadiya Zone, Central Ethiopia" data-am="📍 ሆሳዕና፣ ሀዲያ ዞን፣ ማዕከላዊ ኢትዮጵያ">📍 Hossana, Hadiya Zone, Central Ethiopia</span>
+        <a href="tel:+251903246324">📞 +251 90 324 6324</a>
+        <a href="mailto:hossanmesob@gmail.com">✉️ hossanmesob@gmail.com</a>
+      </div>
+      <div class="topbar-actions" style="display:flex; gap:8px; align-items:center;">
+        <button class="lang-btn" onclick="toggleTheme()" id="themeToggleTop" data-en="🌙 Dark" data-am="🌙 ጨለማ">🌙 Dark</button>
+        <button class="lang-btn" onclick="toggleLanguage()" id="langToggleText">አማርኛ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER / NAVIGATION -->
+  <header id="header">
+    <div class="nav-inner">
+      <div class="brand" onclick="showPage('home')">
+        <div class="brand-logo">
+          <!-- Official Mesob One Logo -->
+          <img src="/assets/logo.jpg" alt="Hossana Mesob One logo">
+        </div>
+        <div class="brand-text">
+          <h1 data-en="HOSSANA MESOB ONE" data-am="ሆሳዕና መሶብ አንድ">HOSSANA MESOB ONE</h1>
+          <p data-en="DIGITAL PUBLIC SERVICE CENTER" data-am="የዲጂታል የህዝብ አገልግሎት ማዕከል">DIGITAL PUBLIC SERVICE CENTER</p>
+        </div>
+      </div>
+
+      <!-- DESKTOP NAV LINKS -->
+      <ul class="nav-links">
+        <li class="nav-item">
+          <a href="#" class="nav-link active" onclick="showPage('home'); return false" id="nav-home" data-en="Home" data-am="ዋና ገጽ">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" onclick="showPage('about'); return false" id="nav-about" data-en="About" data-am="ስለ እኛ">About</a>
+          <div class="dropdown">
+            <a href="#" onclick="showPage('about'); scrollToSection('identity')" data-en="Identity" data-am="ማንነት">Identity</a>
+            <a href="#" onclick="showPage('about'); scrollToSection('mission')" data-en="Mission & Vision" data-am="ተልዕኮና ራዕይ">Mission &amp; Vision</a>
+            <a href="#" onclick="showPage('about'); scrollToSection('reform')" data-en="Reform Strategy" data-am="የለውጥ ስትራቴጂ">Reform Strategy</a>
+            <a href="#" onclick="showPage('about'); scrollToSection('leadership')" data-en="Leadership Structure" data-am="የአመራር መዋቅር">Leadership Structure</a>
+            <a href="#" onclick="showPage('about'); scrollToSection('testimonials')" data-en="Testimonials" data-am="ምስክርነቶች">Testimonials</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" onclick="showPage('services'); return false" id="nav-services" data-en="Services" data-am="አገልግሎቶች">Services</a>
+          <div class="dropdown">
+            <a href="#" onclick="showPage('services'); scrollToSection('core')" data-en="Core Services" data-am="ዋና አገልግሎቶች">Core Services</a>
+            <a href="#" onclick="showPage('services'); scrollToSection('categories')" data-en="Categories" data-am="ምድቦች">Categories</a>
+            <a href="#" onclick="showPage('services'); scrollToSection('library')" data-en="Resource Library" data-am="ሰነዶች ማውረጃ">Resource Library</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" onclick="showPage('track'); return false" id="nav-track" data-en="Track" data-am="ክትትል">Track</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" onclick="showPage('news'); return false" id="nav-news" data-en="News" data-am="ዜና">News</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link nav-cta" onclick="showPage('contact'); return false" id="nav-contact" data-en="Contact Us" data-am="ያግኙን">Contact Us</a>
+        </li>
+        <li class="nav-item">
+          <button class="nav-more-trigger" onclick="toggleMoreMenu()">⋮</button>
+          <div class="dropdown" id="moreDropdown" style="right:0; left:auto; transform: translateY(10px);">
+            <a href="#" onclick="openSearch(); closeMoreMenu()" data-en="🔍 Global Search (Ctrl+K)" data-am="🔍 ፈጣን ፍለጋ (Ctrl+K)">🔍 Global Search (Ctrl+K)</a>
+            <a href="#" onclick="toggleTheme(); closeMoreMenu()" id="themeToggleText" data-en="🌙 Dark Mode" data-am="🌙 ጨለማ ገጽ">🌙 Dark Mode</a>
+          </div>
+        </li>
+      </ul>
+
+      <!-- HAMBURGER MENU BUTTON -->
+      <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU OVERLAY -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="btn btn-blue" onclick="openSearch(); toggleMobileMenu()" style="margin-bottom:18px;" data-en="🔍 Global Search" data-am="🔍 ፈጣን ፍለጋ">🔍 Global Search</button>
+    <a href="#" onclick="showPage('home'); toggleMobileMenu()" data-en="🏠 Home" data-am="🏠 ዋና ገጽ">🏠 Home</a>
+    <div class="m-section-label" data-en="ABOUT" data-am="ስለ እኛ">ABOUT</div>
+    <a href="#" onclick="showPage('about'); toggleMobileMenu()" data-en="🏛️ Institutional Identity" data-am="🏛️ የተቋም ማንነት">🏛️ Institutional Identity</a>
+    <a href="#" onclick="showPage('about'); scrollToSection('leadership'); toggleMobileMenu()" data-en="👥 Leadership Team" data-am="👥 አመራር ቡድን">👥 Leadership Team</a>
+    <div class="m-section-label" data-en="SERVICES" data-am="አገልግሎቶች">SERVICES</div>
+    <a href="#" onclick="showPage('services'); toggleMobileMenu()" data-en="🧾 View Digital Services" data-am="🧾 ዲጂታል አገልግሎቶች">🧾 View Digital Services</a>
+    <a href="#" onclick="showPage('track'); toggleMobileMenu()" data-en="📍 Track Application" data-am="📍 የጉዳይ ክትትል">📍 Track Application</a>
+    <a href="#" onclick="showPage('services'); scrollToSection('library'); toggleMobileMenu()" data-en="📂 Document Downloads" data-am="📂 ሰነዶች ማውረጃ">📂 Document Downloads</a>
+    <div class="m-section-label" data-en="COMMUNICATION" data-am="ግንኙነት">COMMUNICATION</div>
+    <a href="#" onclick="showPage('news'); toggleMobileMenu()" data-en="📰 News Updates" data-am="📰 የዜና መረጃዎች">📰 News Updates</a>
+    <a href="#" onclick="showPage('contact'); toggleMobileMenu()" data-en="✉️ Contact Information" data-am="✉️ ያግኙን">✉️ Contact Information</a>
+    <button class="btn btn-outline" onclick="toggleTheme(); toggleMobileMenu(); return false" style="margin-top:20px;" data-en="🌙 Dark Mode" data-am="🌙 ጨለማ ገጽ">🌙 Dark Mode</button>
+  </div>
+
+  <!-- MAIN VIEW CONTAINER -->
+  <main>
+
+    <!-- PAGE: HOME -->
+    <div class="page active" id="page-home">
+      <!-- HERO CAROUSEL (similar real-world photos replace AI-generated ones) -->
+      <div class="hero">
+        <div class="hero-carousel-wrap" id="heroCarousel">
+          <div class="hero-slide hero-slide-active" data-index="0">
+            <img src="/assets/office.jpg" alt="Mesob One service center building" fetchpriority="high">
+          </div>
+          <div class="hero-slide" data-index="1">
+            <img src="/assets/hero-1.jpg" alt="Center activity" loading="lazy">
+          </div>
+          <div class="hero-slide" data-index="2">
+            <img src="/assets/hero-2.jpg" alt="Citizens at the center" loading="lazy">
+          </div>
+          <div class="hero-slide" data-index="3">
+            <img src="/assets/hero-3.jpg" alt="Digital services in action" loading="lazy">
+          </div>
+          <div class="hero-slide" data-index="4">
+            <img src="/assets/hero-4.jpg" alt="Service delivery" loading="lazy">
+          </div>
+          <div class="hero-slide" data-index="5">
+            <img src="/assets/hero-5.jpg" alt="Paperless operations" loading="lazy">
+          </div>
+          <div class="hero-slide" data-index="6">
+            <img src="/assets/hero-6.jpg" alt="Community engagement" loading="lazy">
+          </div>
+          <div class="hero-slide" data-index="7">
+            <img src="/assets/hero-7.jpg" alt="Serving the people of Hossana" loading="lazy">
+          </div>
+          <div class="hero-slide" data-index="8">
+            <img src="/assets/hero-8.jpg" alt="One digital roof" loading="lazy">
+          </div>
+        </div>
+
+        <div class="hero-content">
+          <div class="hero-text" id="heroText">
+            <span class="badge" data-en="One Roof • 12 Institutions" data-am="አንድ ጣራ • 12 ተቋማት">One Roof • 12 Institutions</span>
+            <h1 id="heroSlideTitle">Welcome to Hossana Mesob One Digital Service</h1>
+            <p id="heroSlideDesc">Twelve government offices united under a single digital roof to serve you faster and better.</p>
+            <div class="hero-btns">
+              <button class="btn btn-primary" onclick="showPage('services')" data-en="Browse Services" data-am="አገልግሎቶችን ይመልከቱ">Browse Services</button>
+              <button class="btn btn-outline-white" onclick="showPage('track')" data-en="Track Application" data-am="ያመለከቱትን ይከታተሉ">Track Application</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-controls">
+          <button class="hero-arrow" onclick="prevSlide()" aria-label="Previous slide">←</button>
+          <div class="hero-dots" id="heroDots"></div>
+          <button class="hero-arrow" onclick="nextSlide()" aria-label="Next slide">→</button>
+        </div>
+      </div>
+
+      <!-- STATS BANNER -->
+      <div class="stats-banner">
+        <div class="stats-grid rv-stagger" data-reveal>
+          <div class="stat-item">
+            <div class="num" data-val="12">12</div>
+            <div class="lbl" data-en="United Institutions" data-am="የተዋሃዱ ተቋማት">United Institutions</div>
+          </div>
+          <div class="stat-item">
+            <div class="num" data-val="40">40<sup>+</sup></div>
+            <div class="lbl" data-en="Online Services" data-am="ዲጂታል አገልግሎቶች">Online Services</div>
+          </div>
+          <div class="stat-item">
+            <div class="num" data-val="1200">1,200<sup>+</sup></div>
+            <div class="lbl" data-en="Daily Visitors Served" data-am="ዕለታዊ ጎብኝዎች">Daily Visitors Served</div>
+          </div>
+          <div class="stat-item">
+            <div class="num" data-val="98">98<sup>%</sup></div>
+            <div class="lbl" data-en="Satisfaction Rate" data-am="የደንበኞች እርካታ">Satisfaction Rate</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARTNER INSTITUTIONS STRIP -->
+      <section style="padding: 46px 0; background: var(--bg-surface);">
+        <div class="container">
+          <div class="section-head rv rv-up" data-reveal style="margin-bottom: 30px;">
+            <div class="section-label" data-en="UNITED UNDER ONE ROOF" data-am="በአንድ ጣራ ሥር">UNITED UNDER ONE ROOF</div>
+            <h2 class="section-title" data-en="Partner Institutions" data-am="የተባባሪ ተቋማት">Partner Institutions</h2>
+          </div>
+          <div class="partners-grid rv-stagger" data-reveal>
+            <div class="partner-card" title="Fayda National ID"><img src="/assets/partner-fayda.jpg" alt="Fayda National ID" loading="lazy"></div>
+            <div class="partner-card" title="Commercial Bank of Ethiopia"><img src="/assets/partner-cbe.jpg" alt="Commercial Bank of Ethiopia" loading="lazy"></div>
+            <div class="partner-card" title="Ethio Telecom"><img src="/assets/partner-telecom.jpg" alt="Ethio Telecom" loading="lazy"></div>
+            <div class="partner-card" title="Ethiopost"><img src="/assets/partner-post.jpg" alt="Ethiopost" loading="lazy"></div>
+            <div class="partner-card" title="Document Authentication & Registration Service"><img src="/assets/partner-docauth.jpg" alt="Document Authentication and Registration Service" loading="lazy"></div>
+            <div class="partner-card" title="Revenue Bureau"><img src="/assets/partner-revenue.jpg" alt="Revenue Bureau" loading="lazy"></div>
+            <div class="partner-card" title="Trade & Market Development Bureau"><img src="/assets/partner-trade.jpg" alt="Trade and Market Development Bureau" loading="lazy"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT SUMMARY -->
+      <section>
+        <div class="container home-about-grid">
+          <div class="about-text rv rv-left" data-reveal>
+            <div class="section-label" data-en="ABOUT THE CENTER" data-am="ስለ ማዕከሉ">ABOUT THE CENTER</div>
+            <h3 data-en="A New Era of Digital Public Services" data-am="አዲስ የዲጂታል ህዝብ አገልግሎት ዘመን">A New Era of Digital Public Services</h3>
+            <p data-en="Hossana Mesob One Digital Service Center represents a national reform designed to streamline public services. We replace long queues, paper files, and scattered departments with a digitized, one-stop center." data-am="የሆሳዕና መሶብ አንድ ዲጂታል አገልግሎት ማዕከል የመንግስትን አገልግሎት ለማቀላጠፍ የተዘረጋ ብሔራዊ የለውጥ ስራ ነው። ረጅም ወረፋዎችን፣ የወረቀት ሰነዶችን እና የተበታተኑ ቢሮዎችን በአንድ የተማከለ ዲጂታል ማዕከል ተክተናል።">Hossana Mesob One Digital Service Center represents a national reform designed to streamline public services. We replace long queues, paper files, and scattered departments with a digitized, one-stop center.</p>
+            <div class="features-list">
+              <div class="feat-item"><span class="ficon">✓</span><span data-en="Unified Government Portal" data-am="የተማከለ የመንግስት ፖርታል">Unified Government Portal</span></div>
+              <div class="feat-item"><span class="ficon">✓</span><span data-en="Paperless Operations" data-am="ወረቀት አልባ አሰራር">Paperless Operations</span></div>
+              <div class="feat-item"><span class="ficon">✓</span><span data-en="Secure QR-Code Verification" data-am="አስተማማኝ የQR-ኮድ ማረጋገጫ">Secure QR-Code Verification</span></div>
+              <div class="feat-item"><span class="ficon">✓</span><span data-en="Bilingual Interface support" data-am="ለሁለት ቋንቋዎች ድጋፍ">Bilingual Interface support</span></div>
+            </div>
+            <button class="btn btn-blue" style="margin-top: 30px;" onclick="showPage('about')" data-en="Learn More About Us" data-am="ስለ እኛ ዝርዝር መረጃ">Learn More About Us</button>
+          </div>
+          <div class="about-visual rv rv-right" data-reveal>
+            <div class="about-visual-inner">
+              <div class="about-visual-logo"><img src="/assets/logo.jpg" alt="Mesob One emblem" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+              <p class="amharic">በአንድ ጣራ ስር ሁሉንም አገልግሎቶች በተቀላጠፈ ሁኔታ ያግኙ።</p>
+              <p class="en">Access all services efficiently under one roof.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURED SERVICES SUMMARY -->
+      <section style="background: var(--bg-surface-alt);">
+        <div class="container">
+          <div class="section-head rv rv-up" data-reveal>
+            <div class="section-label" data-en="CORE SERVICES" data-am="ዋና አገልግሎቶች">CORE SERVICES</div>
+            <h2 class="section-title" data-en="Popular Online Services" data-am="ተደጋጋሚ ዲጂታል አገልግሎቶች">Popular Online Services</h2>
+            <p class="section-desc" data-en="Access the most critical public services online right now." data-am="በብዛት የሚፈለጉ የመንግስት አገልግሎቶችን አሁኑኑ ያግኙ።">Access the most critical public services online right now.</p>
+          </div>
+          <div class="services-grid rv-stagger" data-reveal>
+            <div class="scard" onclick="showPage('services')">
+              <div class="scard-icon">🆔</div>
+              <h3 data-en="National ID (Fayda)" data-am="ብሔራዊ መታወቂያ (ፋይዳ)">National ID (Fayda)</h3>
+              <p data-en="Schedule appointments, update biometric errors, print new digital ID cards, or request reprints." data-am="ቀጠሮዎችን ይያዙ፣ የባዮሜትሪክ ስህተቶችን ያስተካክሉ፣ አዲስ ዲጂታል መታወቂያ ያትሙ ወይም ምትክ ይጠይቁ።">Schedule appointments, update biometric errors, print new digital ID cards, or request reprints.</p>
+              <a class="learn-more" href="#" onclick="return false" data-en="Apply Now →" data-am="አሁን ያመልክቱ →">Apply Now →</a>
+            </div>
+            <div class="scard" onclick="showPage('services')">
+              <div class="scard-icon">💼</div>
+              <h3 data-en="Trade License & Renewals" data-am="የንግድ ፈቃድና እድሳት">Trade License &amp; Renewals</h3>
+              <p data-en="Register new businesses, renew annual trade licenses, modify credentials, or process cancellations online." data-am="አዲስ ንግድ ይመዝግቡ፣ ዓመታዊ የንግድ ፈቃድ ያድሱ፣ ፈቃድ ያሻሽሉ ወይም ይሰርዙ።">Register new businesses, renew annual trade licenses, modify credentials, or process cancellations online.</p>
+              <a class="learn-more" href="#" onclick="return false" data-en="Manage License →" data-am="ፈቃድ ያስተዳድሩ →">Manage License →</a>
+            </div>
+            <div class="scard" onclick="showPage('services')">
+              <div class="scard-icon">🏦</div>
+              <h3 data-en="Banking & ID Linkage" data-am="የባንክና መታወቂያ ትስስር">Banking &amp; ID Linkage</h3>
+              <p data-en="Harmonize and bind Commercial Bank of Ethiopia (CBE) accounts with your Fayda Digital ID seamlessly." data-am="የኢትዮጵያ ንግድ ባንክ (CBE) ሒሳቦችን ከፋይዳ ዲጂታል መታወቂያዎ ጋር ያለምንም ችግር ያገናኙ።">Harmonize and bind Commercial Bank of Ethiopia (CBE) accounts with your Fayda Digital ID seamlessly.</p>
+              <a class="learn-more" href="#" onclick="return false" data-en="Link Accounts →" data-am="አሁኑኑ ያስሩ →">Link Accounts →</a>
+            </div>
+          </div>
+          <div style="text-align: center; margin-top: 40px;">
+            <button class="btn btn-outline" onclick="showPage('services')" data-en="View All Services" data-am="ሁሉንም አገልግሎቶች ይመልከቱ">View All Services</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- IMPACT STATISTICS SECTION -->
+      <section class="impact-section">
+        <div class="container">
+          <div class="section-head rv rv-up" data-reveal>
+            <div class="section-label" data-en="OUR IMPACT" data-am="ጥረታችን የፈጠረው ተጽዕኖ">OUR IMPACT</div>
+            <h2 class="section-title" data-en="Transformation in Figures" data-am="ለውጡ በቁጥሮች ሲገለጽ">Transformation in Figures</h2>
+            <p class="section-desc" data-en="Witness the efficiency metrics of Mesob One in the Hosanna community." data-am="በሆሳዕና ማህበረሰብ ውስጥ የተመዘገቡ የቅልጥፍና ማሳያዎችን ይመልከቱ።">Witness the efficiency metrics of Mesob One in the Hosanna community.</p>
+          </div>
+          <div class="impact-grid rv-stagger" data-reveal data-counter-scope>
+            <div class="icard"><div class="num" data-val="12">12</div><div class="lbl" data-en="Offices Unified" data-am="የተዋሃዱ ቢሮዎች">Offices Unified</div></div>
+            <div class="icard"><div class="num" data-val="25000">25k<sup>+</sup></div><div class="lbl" data-en="Fayda IDs Printed" data-am="የታተሙ የፋይዳ መታወቂያዎች">Fayda IDs Printed</div></div>
+            <div class="icard"><div class="num" data-val="45">45<sup>min</sup></div><div class="lbl" data-en="Avg. Processing Time" data-am="አማካይ የአገልግሎት ጊዜ">Avg. Processing Time</div></div>
+            <div class="icard"><div class="num" data-val="0">0</div><div class="lbl" data-en="Paper Sheets Wasted" data-am="የወደመ ወረቀት">Paper Sheets Wasted</div></div>
+            <div class="icard"><div class="num" data-val="35000">35k<sup>+</sup></div><div class="lbl" data-en="Applications Processed" data-am="የተስተናገዱ ጉዳዮች">Applications Processed</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CALL TO ACTION -->
+      <section>
+        <div class="container">
+          <div class="cta-box rv rv-pop" data-reveal>
+            <h2 data-en="Track Your Application Status Live" data-am="የጉዳይዎን ሁኔታ በቀጥታ ይከታተሉ">Track Your Application Status Live</h2>
+            <p data-en="No need to visit the office to check on your document progress. Enter your reference key and view live tracking updates." data-am="የማመልከቻዎን ደረጃ ለማረጋገጥ ቢሮ መምጣት አያስፈልግዎትም። የማጣቀሻ ቁጥርዎን በማስገባት ደረጃውን በቀጥታ ይከታተሉ።">No need to visit the office to check on your document progress. Enter your reference key and view live tracking updates.</p>
+            <div class="cta-btns">
+              <button class="btn btn-primary" onclick="showPage('track')" data-en="Track Status Now" data-am="ክትትል ይጀምሩ">Track Status Now</button>
+              <button class="btn btn-outline-white" onclick="showPage('contact')" data-en="Talk to Support" data-am="ድጋፍ ያግኙ">Talk to Support</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PAGE: ABOUT US -->
+    <div class="page" id="page-about">
+      <div class="page-banner">
+        <div class="container">
+          <div class="breadcrumb">
+            <span onclick="showPage('home')" data-en="Home" data-am="ዋና ገጽ">Home</span> / <span class="active" data-en="About Us" data-am="ስለ እኛ">About Us</span>
+          </div>
+          <h1 data-en="About Mesob One Center" data-am="ስለ መሶብ አንድ ማዕከል">About Mesob One Center</h1>
+          <p data-en="Learn about our digital identity transformation, our core mandates, and national public service reform strategies." data-am="ስለ ዲጂታል ማንነት ለውጥ፣ ስለ ተቋማችን ዋና ተልዕኮዎች እና ብሔራዊ የህዝብ አገልግሎት ማሻሻያ ስልቶች ይወቁ።">Learn about our digital identity transformation, our core mandates, and national public service reform strategies.</p>
+        </div>
+      </div>
+
+      <!-- STORY & DETAILS -->
+      <section id="identity">
+        <div class="container about-story-grid">
+          <div class="story-content rv rv-left" data-reveal>
+            <div class="section-label" data-en="WHO WE ARE" data-am="ማንነታችን">WHO WE ARE</div>
+            <h3 data-en="Unified Public Service Architecture" data-am="የተማከለ የህዝብ አገልግሎት መዋቅር">Unified Public Service Architecture</h3>
+            <p data-en="Historically, citizens had to travel across Hossana to different departments to obtain licenses, verify documents, and pay fees. Hossana Mesob One Digital Service Center gathers 12 separate government entities under one facility, powered by digital processing systems." data-am="ከዚህ ቀደም ዜጎች ፍቃድ ለማግኘት፣ ሰነዶችን ለማረጋገጥ እና ክፍያ ለመፈጸም በሆሳዕና ከተማ ወደተለያዩ መምሪያዎች መጓዝ ነበረባቸው። የሆሳዕና መሶብ አንድ ዲጂታል አገልግሎት ማዕከል 12 የተለያዩ የመንግስት ተቋማትን በአንድ ህንፃ ስር ያሰባሰበ ሲሆን በዲጂታል ፕሮሰሲንግ ሲስተም ይሰራል።">Historically, citizens had to travel across Hossana to different departments to obtain licenses, verify documents, and pay fees. Hossana Mesob One Digital Service Center gathers 12 separate government entities under one facility, powered by digital processing systems.</p>
+            <p data-en="This center runs on a full digital framework, aligning with Ethiopia's National ID system (Fayda) to create an authenticated profile for citizens, enabling immediate and paperless public service." data-am="ይህ ማዕከል ከኢትዮጵያ ብሔራዊ መታወቂያ ሥርዓት (ፋይዳ) ጋር በመጣጣም ዜጎች ማንነታቸውን አረጋግጠው ፈጣንና ወረቀት አልባ አገልግሎት ማግኘት እንዲችሉ በሙሉ ዲጂታል መዋቅር ላይ ይሰራል።">This center runs on a full digital framework, aligning with Ethiopia's National ID system (Fayda) to create an authenticated profile for citizens, enabling immediate and paperless public service.</p>
+          </div>
+          <div class="about-details-card rv rv-right" data-reveal>
+            <h4 data-en="Institutional Identity" data-am="የተቋሙ መረጃ">Institutional Identity</h4>
+            <div class="detail-row">
+              <span class="label" data-en="Establishment Place" data-am="የተመሰረተበት ቦታ">Establishment Place</span>
+              <span class="val" data-en="Hossana, Central Ethiopia" data-am="ሆሳዕና፣ ማዕከላዊ ኢትዮጵያ">Hossana, Central Ethiopia</span>
+            </div>
+            <div class="detail-row">
+              <span class="label" data-en="Core Technologies" data-am="ዋና ቴክኖሎጂዎች">Core Technologies</span>
+              <span class="val" data-en="Fayda Biometrics, QR Document Verification" data-am="የፋይዳ ባዮሜትሪክስ፣ የሰነድ QR ማረጋገጫ">Fayda Biometrics, QR Document Verification</span>
+            </div>
+            <div class="detail-row">
+              <span class="label" data-en="Unified Departments" data-am="የተዋሃዱ ቢሮዎች">Unified Departments</span>
+              <span class="val" data-en="12 Government Units" data-am="12 የመንግስት መስሪያ ቤቶች">12 Government Units</span>
+            </div>
+            <div class="detail-row">
+              <span class="label" data-en="Support Channels" data-am="የድጋፍ መስመሮች">Support Channels</span>
+              <span class="val" data-en="Phone, Email, Support Chat" data-am="ስልክ፣ ኢሜይል፣ ረዳት ውይይት">Phone, Email, Support Chat</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MISSION & VISION -->
+      <section style="background: var(--bg-surface-alt);" id="mission">
+        <div class="container">
+          <div class="services-grid rv-stagger" data-reveal>
+            <div class="scard">
+              <div class="scard-icon">🎯</div>
+              <h3 data-en="Our Mission" data-am="ተልዕኮአችን">Our Mission</h3>
+              <p data-en="To deliver seamless, modern, and high-speed public services to citizens through advanced digital integrations and a dedicated professional workspace." data-am="ዘመናዊ የዲጂታል ትስስሮችንና የተመቻቸ የስራ ቦታን በመጠቀም ለዜጎች ፈጣን፣ ግልጽና ወጥ የሆኑ የመንግስት አገልግሎቶችን ማቅረብ።">To deliver seamless, modern, and high-speed public services to citizens through advanced digital integrations and a dedicated professional workspace.</p>
+            </div>
+            <div class="scard">
+              <div class="scard-icon">👁️‍🗨️</div>
+              <h3 data-en="Our Vision" data-am="ራዕያችን">Our Vision</h3>
+              <p data-en="To see Hossana recognized as a smart city leader, serving as the benchmark model for digital public service delivery across Ethiopia by 2030." data-am="እ.ኤ.አ በ2030 ሆሳዕና ዘመናዊ ከተማ ሆና በመላው ኢትዮጵያ በዲጂታል የህዝብ አገልግሎት አሰጣጥ ግንባር ቀደም ሞዴል ሆና ማየት።">To see Hossana recognized as a smart city leader, serving as the benchmark model for digital public service delivery across Ethiopia by 2030.</p>
+            </div>
+            <div class="scard">
+              <div class="scard-icon">🛡️</div>
+              <h3 data-en="Our Values" data-am="ዕሴቶቻችን">Our Values</h3>
+              <p data-en="Citizens first, full transparency, strict information security, paperless innovation, and cooperative governance." data-am="ዜጎችን ማስቀደም፣ ሙሉ ግልጽነት፣ የደህንነት ጥበቃ፣ ወረቀት አልባ ፈጠራ እና የጋራ ህዝባዊ ትብብር።">Citizens first, full transparency, strict information security, paperless innovation, and cooperative governance.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- REFORM STRATEGY -->
+      <section id="reform">
+        <div class="container about-story-grid">
+          <div class="about-details-card rv rv-left" data-reveal>
+            <h4 data-en="Selection Criteria for Unified Offices" data-am="የቢሮዎች መመረጫ መስፈርቶች">Selection Criteria for Unified Offices</h4>
+            <ul style="list-style: none;">
+              <li style="margin-bottom: 12px;" data-en="• High volume of daily citizen inquiries" data-am="• ከፍተኛ የዕለት ተዕለት የደንበኛ ፍሰት መኖር">• High volume of daily citizen inquiries</li>
+              <li style="margin-bottom: 12px;" data-en="• Crucial dependency on citizen identity verification" data-am="• በማንነት ማረጋገጫ ላይ ያላቸው ጥገኝነት ከፍተኛ መሆን">• Crucial dependency on citizen identity verification</li>
+              <li style="margin-bottom: 12px;" data-en="• Capacity for fast digital workflow adoption" data-am="• ለዲጂታል አሰራር ምቹ መሆን">• Capacity for fast digital workflow adoption</li>
+              <li style="margin-bottom: 12px;" data-en="• Potential to eliminate physical document transit" data-am="• የወረቀት ዝውውርን የማስቀረት አቅም መኖር">• Potential to eliminate physical document transit</li>
+            </ul>
+          </div>
+          <div class="story-content rv rv-right" data-reveal>
+            <div class="section-label" data-en="NATIONAL STRATEGY" data-am="ብሔራዊ የለውጥ ስትራቴጂ">NATIONAL STRATEGY</div>
+            <h3 data-en="National Reform & Digitalization Strategy" data-am="ብሔራዊ የማሻሻያና ዲጂታላይዜሽን ስልት">National Reform &amp; Digitalization Strategy</h3>
+            <p data-en="Hossana Mesob One is established under the framework of Ethiopia's civil service reform program. The focus is to harmonize database infrastructure. By connecting trade, taxation, immigration, banking, and address registers to the National ID core database, we remove bureaucratic blockages." data-am="የሆሳዕና መሶብ አንድ ማዕከል የተመሰረተው በኢትዮጵያ የሲቪል ሰርቪስ ማሻሻያ ፕሮግራም ማዕቀፍ ነው። ትኩረቱ የውሂብ ጎታ (database) መሰረተ ልማትን ማጣጣም ነው። ንግድ፣ ታክስ፣ ኢሚግሬሽን፣ ባንክ እና አድራሻ መዛግብትን ከብሔራዊ መታወቂያ ዋና ዳታቤዝ ጋር በማገናኘት የቢሮክራሲ ማነቆዎችን እናስወግዳለን።">Hossana Mesob One is established under the framework of Ethiopia's civil service reform program. The focus is to harmonize database infrastructure. By connecting trade, taxation, immigration, banking, and address registers to the National ID core database, we remove bureaucratic blockages.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- LEADERSHIP STRUCTURE -->
+      <section style="background: var(--bg-surface-alt);" id="leadership">
+        <div class="container">
+          <div class="section-head rv rv-up" data-reveal>
+            <div class="section-label" data-en="LEADERSHIP" data-am="አመራር">LEADERSHIP</div>
+            <h2 class="section-title" data-en="Management Board & Officers" data-am="የማዕከሉ ቦርድና ስራ አስፈፃሚዎች">Management Board &amp; Officers</h2>
+            <p class="section-desc" data-en="The professionals driving the transformation and efficiency of public services." data-am="የህዝብ አገልግሎት ማሻሻያውን በላቀ ብቃት የሚመሩ ባለሙያዎች።">The professionals driving the transformation and efficiency of public services.</p>
+          </div>
+          <div class="governance-grid rv-stagger" id="governanceGrid" data-reveal>
+            <div class="skel"></div><div class="skel"></div><div class="skel"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIALS -->
+      <section id="testimonials">
+        <div class="container">
+          <div class="section-head rv rv-up" data-reveal>
+            <div class="section-label" data-en="CITIZEN VOICE" data-am="የዜጎች ድምፅ">CITIZEN VOICE</div>
+            <h2 class="section-title" data-en="What People Are Saying" data-am="የደንበኞች አስተያየት">What People Are Saying</h2>
+            <p class="section-desc" data-en="Real reviews from citizens who have experienced Hossana Mesob One." data-am="ከማዕከሉ አገልግሎት ያገኙ ዜጎች የሰጡት ትክክለኛ ምስክርነት።">Real reviews from citizens who have experienced Hossana Mesob One.</p>
+          </div>
+
+          <div class="testimonial-card rv rv-focus" data-reveal>
+            <div class="testimonial-photo-wrap">
+              <img id="testiAvatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop" alt="Citizen Reviewer">
+            </div>
+            <div class="testimonial-body">
+              <p class="testimonial-quote amharic" data-lang-content="am">“ከዚህ በፊት የንግድ ፈቃዴን ለማደስ ቢሮ ለቢሮ ስዞር ከ3 እስከ 5 ቀናት ይፈጅብኝ ነበር። በሆሳዕና መሶብ አንድ ማዕከል ግን ዲጂታል መታወቂያዬን በማሳየት ብቻ በ40 ደቂቃ ውስጥ ሁሉንም ፈጽሜ ወጥቻለሁ። ይህ ለእኛ ትልቅ እፎይታ ነው!”</p>
+              <p class="testimonial-quote en" style="display:none;" data-lang-content="en">“Previously, renewing my trade license meant running between different departments for 3 to 5 days. Today at Mesob One, I completed everything in just 40 minutes using my Digital ID. This is a massive relief for business owners!”</p>
+              <div class="testimonial-author">
+                <h4 data-en="Ato Tesfaye Abreham" data-am="አቶ ተስፋዬ አብርሃም">Ato Tesfaye Abreham</h4>
+                <p data-en="Local Merchant, Hossana City" data-am="የከተማው ነጋዴ፣ ሆሳዕና">Local Merchant, Hossana City</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PAGE: SERVICES -->
+    <div class="page" id="page-services">
+      <div class="page-banner">
+        <div class="container">
+          <div class="breadcrumb">
+            <span onclick="showPage('home')" data-en="Home" data-am="ዋና ገጽ">Home</span> / <span class="active" data-en="Services" data-am="አገልግሎቶች">Services</span>
+          </div>
+          <h1 data-en="Digital Public Services" data-am="የዲጂታል አገልግሎቶች ማውጫ">Digital Public Services</h1>
+          <p data-en="Explore and apply online for official government services integrated into Hossana Mesob One." data-am="በሆሳዕና መሶብ አንድ ውስጥ የተዋሃዱ የመንግስት አገልግሎቶችን በመስመር ላይ ያግኙ፣ ማመልከቻም ያስገቡ።">Explore and apply online for official government services integrated into Hossana Mesob One.</p>
+        </div>
+      </div>
+
+      <!-- CORE SERVICES LIST -->
+      <section id="core">
+        <div class="container">
+          <div class="section-head rv rv-up" data-reveal>
+            <div class="section-label" data-en="Core Services" data-am="ዋና ዋና አገልግሎቶች">Core Services</div>
+            <h2 class="section-title" data-en="Services Offered at the Center" data-am="በማዕከሉ የሚሰጡ አገልግሎቶች">Services Offered at the Center</h2>
+          </div>
+          <div class="services-grid rv-stagger" data-reveal>
+            <div class="scard">
+              <div class="scard-icon">🏢</div>
+              <h3 data-en="Integrated Office Spaces" data-am="የተቀናጁ የቢሮ ክፍሎች">Integrated Office Spaces</h3>
+              <p data-en="Hossana Mesob One provides 24 modern office spaces hosting 12 integrated government entities, ensuring physical and digital coordination." data-am="የሆሳዕና መሶብ አንድ ማዕከል በአንድ ቦታ 12 የመንግስት መስሪያ ቤቶችን የሚያስተናግዱ 24 ዘመናዊ የቢሮ ክፍሎችን ያቀርባል።">Hossana Mesob One provides 24 modern office spaces hosting 12 integrated government entities, ensuring physical and digital coordination.</p>
+            </div>
+            <div class="scard">
+              <div class="scard-icon">🖨️</div>
+              <h3 data-en="Self-Service Kiosks" data-am="የራስ-አገዝ ዲጂታል ጣቢያዎች">Self-Service Kiosks</h3>
+              <p data-en="Equipped with biometric scanners, high-speed document printers, and queuing terminals for citizen convenience." data-am="ዜጎች በቀላሉ እንዲጠቀሙ የባዮሜትሪክ አንባቢዎች፣ ፈጣን ሰነድ ማተሚያዎችና የነፃ ወረፋ ተርሚናሎች የተገጠሙላቸው ናቸው።">Equipped with biometric scanners, high-speed document printers, and queuing terminals for citizen convenience.</p>
+            </div>
+            <div class="scard">
+              <div class="scard-icon">📡</div>
+              <h3 data-en="Dedicated Tech Support" data-am="የቴክኒክ ድጋፍ ቡድን">Dedicated Tech Support</h3>
+              <p data-en="IT desk assisting with online registrations, digital payments, and QR code verification issues instantly." data-am="በመስመር ላይ ምዝገባ፣ ዲጂታል ክፍያና የQR ኮድ ማረጋገጫ ላይ ለሚገጥሙ ችግሮች ፈጣን እገዛ የሚሰጥ የባለሙያዎች ስብስብ።">IT desk assisting with online registrations, digital payments, and QR code verification issues instantly.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CATEGORIES -->
+      <section style="background: var(--bg-surface-alt);" id="categories">
+        <div class="container">
+          <div class="section-head rv rv-up" data-reveal>
+            <div class="section-label" data-en="CATEGORIES" data-am="የአገልግሎት ምድቦች">CATEGORIES</div>
+            <h2 class="section-title" data-en="Browse by Department" data-am="በመንግስት መስሪያ ቤት መደብ">Browse by Department</h2>
+            <p class="section-desc" data-en="Select a department to view the list of verified online services." data-am="የተዋሃዱ የመስሪያ ቤት አገልግሎቶችን ለመመልከት ምድቡን ይምረጡ።">Select a department to view the list of verified online services.</p>
+          </div>
+
+          <div class="comp-filter" id="serviceFilter">
+            <button class="filter-btn active" data-filter="all" data-en="All Departments" data-am="ሁሉም ተቋማት">All Departments</button>
+            <button class="filter-btn" data-filter="national-id" data-en="National ID (Fayda)" data-am="ብሔራዊ መታወቂያ">National ID (Fayda)</button>
+            <button class="filter-btn" data-filter="trade" data-en="Trade License" data-am="ንግድና ገበያ">Trade License</button>
+            <button class="filter-btn" data-filter="postal" data-en="Postal Service" data-am="ፖስታ አገልግሎት">Postal Service</button>
+            <button class="filter-btn" data-filter="telecom" data-en="Telecom & Telebirr" data-am="ቴሌኮም/ቴሌብር">Telecom &amp; Telebirr</button>
+            <button class="filter-btn" data-filter="banking" data-en="CBE Banking" data-am="ንግድ ባንክ">CBE Banking</button>
+          </div>
+
+          <div class="comp-grid rv-stagger" id="servicesGrid" data-reveal>
+            <!-- Cards generated dynamically in app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- DOWNLOADS LIBRARY -->
+      <section id="library">
+        <div class="container">
+          <div class="section-head rv rv-up" data-reveal>
+            <div class="section-label" data-en="DOWNLOADS" data-am="ሰነዶች ማውረጃ">DOWNLOADS</div>
+            <h2 class="section-title" data-en="Document & Resource Library" data-am="መመሪያዎችና የቅጽ ሰነዶች">Document &amp; Resource Library</h2>
+            <p class="section-desc" data-en="Download official forms, guidelines, and PDF regulations directly." data-am="ኦፊሴላዊ የደንበኞች ቅጾችን፣ መመሪያዎችንና ደንቦችን በፒዲኤፍ ቅርጸት ያውርዱ።">Download official forms, guidelines, and PDF regulations directly.</p>
+          </div>
+
+          <div class="comp-filter" id="downloadFilter">
+            <button class="filter-btn active" data-cat="all" data-en="All Files" data-am="ሁሉም ሰነዶች">All Files</button>
+            <button class="filter-btn" data-cat="forms" data-en="Application Forms" data-am="የማመልከቻ ቅጾች">Application Forms</button>
+            <button class="filter-btn" data-cat="guidelines" data-en="Guidelines" data-am="መመሪያዎች">Guidelines</button>
+            <button class="filter-btn" data-cat="regulations" data-en="Regulations" data-am="ደንቦች">Regulations</button>
+          </div>
+
+          <div class="dl-grid rv-stagger" id="downloadsGrid" data-reveal>
+            <!-- Populated dynamically via app.js -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PAGE: TRACK APPLICATION -->
+    <div class="page" id="page-track">
+      <div class="page-banner">
+        <div class="container">
+          <div class="breadcrumb">
+            <span onclick="showPage('home')" data-en="Home" data-am="ዋና ገጽ">Home</span> / <span class="active" data-en="Track Status" data-am="የጉዳይ ክትትል">Track Status</span>
+          </div>
+          <h1 data-en="Track Application Status" data-am="የማመልከቻ ሁኔታ መከታተያ">Track Application Status</h1>
+          <p data-en="Enter your unique reference key to monitor the real-time processing status of your document request." data-am="የማመልከቻዎን የእውነተኛ ጊዜ ሂደት ደረጃ ለመከታተል ልዩ የማጣቀሻ ቁጥርዎን ያስገቡ።">Enter your unique reference key to monitor the real-time processing status of your document request.</p>
+        </div>
+      </div>
+
+      <section>
+        <div class="container track-wrapper">
+          <div class="track-box rv rv-up" data-reveal>
+            <h3 data-en="Application Status Lookup" data-am="የማመልከቻ ሁኔታ ፍለጋ">Application Status Lookup</h3>
+            <p class="desc" data-en="Enter your Application Reference Number (e.g., APP-1001, APP-1002)" data-am="እባክዎ የማመልከቻ ቁጥርዎን ያስገቡ (ለምሳሌ፦ APP-1001, APP-1002)">Enter your Application Reference Number (e.g., APP-1001, APP-1002)</p>
+
+            <div class="track-input-row">
+              <input type="text" id="trackInput" placeholder="Enter reference number..." data-am-placeholder="የማጣቀሻ ቁጥር ያስገቡ...">
+              <button class="btn btn-blue" onclick="trackApplication()" data-en="Check Status" data-am="ደረጃውን አሳይ">Check Status</button>
+            </div>
+
+            <!-- TRACK RESULTS -->
+            <div class="track-result" id="trackResult">
+              <div class="track-steps">
+                <div class="track-progress" id="trackProgress"></div>
+                <div class="tstep" id="step-1">
+                  <div class="tdot">1</div>
+                  <p class="step-label" data-en="Submitted" data-am="ተልኳል">Submitted</p>
+                  <p class="step-date" id="date-step-1">-</p>
+                </div>
+                <div class="tstep" id="step-2">
+                  <div class="tdot">2</div>
+                  <p class="step-label" data-en="Verification" data-am="ማረጋገጫ">Verification</p>
+                  <p class="step-date" id="date-step-2">-</p>
+                </div>
+                <div class="tstep" id="step-3">
+                  <div class="tdot">3</div>
+                  <p class="step-label" data-en="Processing" data-am="በሂደት ላይ">Processing</p>
+                  <p class="step-date" id="date-step-3">-</p>
+                </div>
+                <div class="tstep" id="step-4">
+                  <div class="tdot">4</div>
+                  <p class="step-label" data-en="Ready" data-am="ተጠናቋል">Ready</p>
+                  <p class="step-date" id="date-step-4">-</p>
+                </div>
+              </div>
+
+              <!-- Detailed Card -->
+              <div class="app-detail-card">
+                <h4 data-en="Application Information Summary" data-am="የማመልከቻው አጠቃላይ መረጃ">Application Information Summary</h4>
+                <div class="app-detail-grid">
+                  <div class="app-info-item"><span class="lbl" data-en="Applicant Name" data-am="የአመልካች ስም">Applicant Name</span><span class="val" id="val-applicantName">-</span></div>
+                  <div class="app-info-item"><span class="lbl" data-en="Requested Service" data-am="የተጠየቀው አገልግሎት">Requested Service</span><span class="val" id="val-serviceName">-</span></div>
+                  <div class="app-info-item"><span class="lbl" data-en="Current Status" data-am="አሁን ያለበት ደረጃ">Current Status</span><span class="val" id="val-statusText" style="color:var(--primary); font-weight:800;">-</span></div>
+                  <div class="app-info-item"><span class="lbl" data-en="Estimated Completion" data-am="የሚጠናቀቅበት ጊዜ">Estimated Completion</span><span class="val" id="val-etaDate">-</span></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PAGE: NEWS -->
+    <div class="page" id="page-news">
+      <div class="page-banner">
+        <div class="container">
+          <div class="breadcrumb">
+            <span onclick="showPage('home')" data-en="Home" data-am="ዋና ገጽ">Home</span> / <span class="active" data-en="News & Media" data-am="ዜናዎችና መረጃዎች">News &amp; Updates</span>
+          </div>
+          <h1 data-en="News & Announcements" data-am="ዜናዎችና ማስታወቂያዎች">News &amp; Announcements</h1>
+          <p data-en="Stay informed about official launch updates, new database integrations, and holiday office schedules." data-am="ስለ ይፋዊ አገልግሎት ማስጀመሪያ፣ አዲስ የመረጃ ቋት ውህደቶችና የበዓላት የዕረፍት ጊዜ መረጃዎች ይወቁ።">Stay informed about official launch updates, new database integrations, and holiday office schedules.</p>
+        </div>
+      </div>
+
+      <section>
+        <div class="container">
+          <div class="news-full-grid rv-stagger" id="newsGrid" data-reveal>
+            <div class="skel"></div><div class="skel"></div><div class="skel"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PAGE: CONTACT US -->
+    <div class="page" id="page-contact">
+      <div class="page-banner">
+        <div class="container">
+          <div class="breadcrumb">
+            <span onclick="showPage('home')" data-en="Home" data-am="ዋና ገጽ">Home</span> / <span class="active" data-en="Contact Us" data-am="ያግኙን">Contact Us</span>
+          </div>
+          <h1 data-en="Get in Touch" data-am="ያግኙን">Get in Touch</h1>
+          <p data-en="Contact the Hossana Mesob One team directly for general support, database feedback, or integration assistance." data-am="ለአጠቃላይ ድጋፍ፣ ለአስተያየቶች ወይም ለቴክኒክ ትብብር ከሆሳዕና መሶብ አንድ ማዕከል ቡድን ጋር በቀጥታ ይገናኙ።">Contact the Hossana Mesob One team directly for general support, database feedback, or integration assistance.</p>
+        </div>
+      </div>
+
+      <section>
+        <div class="container contact-grid">
+          <div class="contact-info-cards rv-stagger" data-reveal>
+            <div class="ci-card rv rv-left">
+              <div class="ci-icon">📍</div>
+              <div class="ci-text">
+                <h4 data-en="Center Location" data-am="የማዕከሉ አድራሻ">Center Location</h4>
+                <p data-en="Central Ethiopia Regional State, Hadiya Zone, Hossana City Administration Office Complex." data-am="ማዕከላዊ ኢትዮጵያ ክልላዊ መንግስት፣ ሀዲያ ዞን፣ ሆሳዕና ከተማ አስተዳደር ቢሮዎች ህንጻ።">Central Ethiopia Regional State, Hadiya Zone, Hossana City Administration Office Complex.</p>
+              </div>
+            </div>
+            <div class="ci-card rv rv-left">
+              <div class="ci-icon">📞</div>
+              <div class="ci-text">
+                <h4 data-en="Contact Phone Lines" data-am="የስልክ ቁጥሮች">Contact Phone Lines</h4>
+                <p data-html="true" data-en="Support Desk: +251 90 324 6324<br>Alternative line: +251 46 880 1234" data-am="የደንበኞች ድጋፍ: +251 90 324 6324<br>ተለዋጭ ስልክ: +251 46 880 1234">Support Desk: +251 90 324 6324<br>Alternative line: +251 46 880 1234</p>
+              </div>
+            </div>
+            <div class="ci-card rv rv-left">
+              <div class="ci-icon">⏱</div>
+              <div class="ci-text">
+                <h4 data-en="Office Opening Hours" data-am="የስራ ሰዓታት">Office Opening Hours</h4>
+                <p data-html="true" data-en="Monday – Friday: 8:30 AM – 5:30 PM EAT<br>Saturday: 8:30 AM – 12:30 PM (Online Portal: 24/7)" data-am="ሰኞ - አርብ: ከጠዋቱ 2:30 - 11:30 ከሰዓት<br>ቅዳሜ: ከጠዋቱ 2:30 - 6:30 (ድረገፅ: 24 ሰዓት)">Monday – Friday: 8:30 AM – 5:30 PM EAT<br>Saturday: 8:30 AM – 12:30 PM (Online Portal: 24/7)</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form -->
+          <div class="contact-form-wrap rv rv-right" data-reveal>
+            <h3 data-en="Submit a Support Message" data-am="የመልዕክት ማስገቢያ ቅጽ">Submit a Support Message</h3>
+            <p class="desc" data-en="Send us your inquiry, feedback, or database issues." data-am="እባክዎ ጥያቄዎን፣ አስተያየትዎን ወይም ቴክኒካዊ ችግሮችን ይላኩልን።">Send us your inquiry, feedback, or database issues.</p>
+
+            <form id="contactForm" onsubmit="handleContactSubmit(event)">
+              <div class="form-group">
+                <label for="c-name" data-en="Full Name" data-am="ሙሉ ስም">Full Name</label>
+                <input type="text" id="c-name" required placeholder="Enter full name..." data-am-placeholder="ሙሉ ስም ያስገቡ...">
+              </div>
+              <div class="form-group">
+                <label for="c-email" data-en="Email Address" data-am="ኢሜይል አድራሻ">Email Address</label>
+                <input type="email" id="c-email" required placeholder="Enter email address..." data-am-placeholder="ኢሜይል አድራሻ ያስገቡ...">
+              </div>
+              <div class="form-group">
+                <label for="c-topic" data-en="Subject / Category" data-am="ጉዳይ / ምድብ">Subject / Category</label>
+                <select id="c-topic">
+                  <option value="General Support" data-en="General Service Support" data-am="አጠቃላይ አገልግሎት ድጋፍ">General Service Support</option>
+                  <option value="Fayda ID Correction" data-en="Fayda ID Details Correction" data-am="የፋይዳ መታወቂያ ስህተት ማስተካከያ">Fayda ID Details Correction</option>
+                  <option value="Trade License Inquiry" data-en="Trade License Issue" data-am="የንግድ ፈቃድ ጉዳይ">Trade License Issue</option>
+                  <option value="Technical Error" data-en="Website Technical Issue" data-am="የቴክኒክ ችግር / ሪፖርት">Website Technical Issue</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="c-message" data-en="Your Message" data-am="መልዕክትዎ">Your Message</label>
+                <textarea id="c-message" required placeholder="Describe your question in detail..." data-am-placeholder="የሚያስፈልግዎትን ጉዳይ በዝርዝር ይፃፉ..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-blue" style="width:100%;" data-en="Send Message" data-am="መልዕክቱን ላክ">Send Message</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Embedded Map -->
+        <div class="container map-embed rv rv-up" data-reveal>
+          <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=37.8300%2C7.5400%2C37.8900%2C7.5800&amp;layer=mapnik" title="Mesob One location map" loading="lazy"></iframe>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- GLOBAL SEARCH OVERLAY (Ctrl+K) -->
+  <div class="search-overlay" id="searchOverlay" onclick="if(event.target===this)closeSearch()">
+    <div class="search-modal">
+      <div class="search-input-row">
+        <span>🔍</span>
+        <input type="text" id="searchInput" placeholder="Search page actions, forms, news..." data-am-placeholder="ፈልግ: አገልግሎቶች፣ ሰነዶች፣ ዜና...">
+        <kbd>Esc</kbd>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <!-- FLOATING SUPPORT CHAT ASSISTANT -->
+  <button class="chat-fab" id="chatFabBtn" onclick="toggleChatWindow()" aria-label="Support chat">
+    <span class="pulse"></span>
+    <span id="chatFabIcon">💬</span>
+  </button>
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div>
+        <div class="chname" data-en="Mesob One Support Bot" data-am="መሶብ አንድ ድጋፍ ረዳት">Mesob One Support Bot</div>
+        <div class="chsub">
+          <span class="dot"></span>
+          <span data-en="Online • Virtual Agent" data-am="ኦንላይን • ረዳት">Online • Virtual Agent</span>
+        </div>
+      </div>
+      <button class="chat-close" onclick="toggleChatWindow()">✕</button>
+    </div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-quick" id="chatQuickArea"></div>
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Ask a question..." data-am-placeholder="ጥያቄ ይጠይቁ...">
+      <button class="chat-send" onclick="sendChatMessage()">➤</button>
+    </div>
+  </div>
+
+  <!-- MOBILE NAVIGATION ACTION DOCK -->
+  <div class="quick-dock">
+    <a href="#" class="active" id="dock-home" onclick="showPage('home'); return false">
+      <span class="qicon">🏠</span><span data-en="Home" data-am="ዋና ገጽ">Home</span>
+    </a>
+    <a href="#" id="dock-services" onclick="showPage('services'); return false">
+      <span class="qicon">🧾</span><span data-en="Services" data-am="አገልግሎቶች">Services</span>
+    </a>
+    <a href="#" id="dock-track" onclick="showPage('track'); return false">
+      <span class="qicon">📍</span><span data-en="Track" data-am="ክትትል">Track</span>
+    </a>
+    <a href="#" id="dock-search" onclick="openSearch(); return false">
+      <span class="qicon">🔍</span><span data-en="Search" data-am="ፈልግ">Search</span>
+    </a>
+    <a href="#" id="dock-contact" onclick="showPage('contact'); return false">
+      <span class="qicon">✉️</span><span data-en="Contact" data-am="ያግኙን">Contact</span>
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h4 data-en="Hossana Mesob One" data-am="ሆሳዕና መሶብ አንድ">Hossana Mesob One</h4>
+        <p data-en="Dedicated to modernizing the delivery of civil registry, trade permits, bank coordination, and tax compliance across Hadiya Zone and Hossana administration." data-am="በሀዲያ ዞን እና በሆሳዕና ከተማ አስተዳደር የሲቪል መዛግብት፣ የንግድ ፈቃድ፣ የባንክ ውህደትና የታክስ አገልግሎት አሰጣጥን በዘመናዊ መንገድ ለማቅረብ የተቋቋመ።">Dedicated to modernizing the delivery of civil registry, trade permits, bank coordination, and tax compliance across Hadiya Zone and Hossana administration.</p>
+        <div class="footer-socials">
+          <span class="fsoc">👤</span><span class="fsoc">🐦</span><span class="fsoc">📺</span><span class="fsoc">✈️</span>
+        </div>
+      </div>
+
+      <div>
+        <h5 data-en="Quick Links" data-am="ፈጣን ማገናኛዎች">Quick Links</h5>
+        <ul>
+          <li><a href="#" onclick="showPage('home'); return false" data-en="Home Page" data-am="ዋና ገጽ">Home Page</a></li>
+          <li><a href="#" onclick="showPage('about'); return false" data-en="About the Center" data-am="ስለ ማዕከሉ">About the Center</a></li>
+          <li><a href="#" onclick="showPage('services'); return false" data-en="Bilingual Services" data-am="አገልግሎቶች ማውጫ">Bilingual Services</a></li>
+          <li><a href="#" onclick="showPage('track'); return false" data-en="Track Applications" data-am="የጉዳይ ሁኔታ መከታተያ">Track Applications</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 data-en="Institutional Links" data-am="የተባባሪ ተቋማት">Institutional Links</h5>
+        <ul>
+          <li><a href="https://www.fayda.et" target="_blank" rel="noopener" data-en="Ethiopia National ID" data-am="የኢትዮጵያ ብሔራዊ መታወቂያ">Ethiopia National ID</a></li>
+          <li><a href="https://www.ethio-telecom.et" target="_blank" rel="noopener" data-en="Ethio Telecom" data-am="ኢትዮ ቴሌኮም">Ethio Telecom</a></li>
+          <li><a href="https://www.combanketh.et" target="_blank" rel="noopener" data-en="Commercial Bank" data-am="የኢትዮጵያ ንግድ ባንክ">Commercial Bank</a></li>
+          <li><a href="https://www.ethiopost.et" target="_blank" rel="noopener" data-en="Ethiopost Services" data-am="የኢትዮጵያ ፖስታ አገልግሎት">Ethiopost Services</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-newsletter">
+        <h5 data-en="Newsletter" data-am="የዜና መጽሔት">Newsletter</h5>
+        <p data-en="Subscribe to receive notification emails about local center policies and integrations." data-am="ስለ ማዕከሉ አዲስ አሰራሮችና ማስታወቂያዎች በኢሜይል መረጃ ለማግኘት ይመዝገቡ።">Subscribe to receive notification emails about local center policies and integrations.</p>
+        <form class="fsub-form" onsubmit="handleSubscribe(event)">
+          <input type="email" id="newsletterEmail" required placeholder="Your email address..." data-am-placeholder="የኢሜይል አድራሻዎ...">
+          <button type="submit" class="btn btn-blue" data-en="Subscribe" data-am="ይመዝገቡ">Subscribe</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p data-en="© 2026 Hossana Mesob One Digital Service Center. All Rights Reserved." data-am="© 2026 ሆሳዕና መሶብ አንድ ዲጂታል አገልግሎት ማዕከል። መብቱ በሕግ የተጠበቀ ነው።">© 2026 Hossana Mesob One Digital Service Center. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

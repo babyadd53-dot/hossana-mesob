@@ -1,0 +1,19 @@
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 5173,
+    proxy: {
+      '/api': 'http://127.0.0.1:5050',
+      '/uploads': 'http://127.0.0.1:5050',
+      '/assets': 'http://127.0.0.1:5050',
+    },
+  },
+  build: {
+    outDir: '../dist',
+    emptyOutDir: true,
+    assetsDir: 'app', // keeps vite bundles away from /assets brand images
+  },
+});
