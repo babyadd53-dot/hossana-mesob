@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: mesob-one-backend
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://neondb_owner:npg_2DB7bjwcWtmr@ep-red-sunset-axuia7ds-pooler.c-4.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+      - key: SECRET_KEY
+        generateValue: true
+      - key: FLASK_DEBUG
+        value: "0"
+      - key: CORS_ORIGINS
+        value: "https://mesob-one.vercel.app,https://mesob-one-badaohtu.vercel.app"
+    healthCheckPath: /api/news
+    autoDeploy: true

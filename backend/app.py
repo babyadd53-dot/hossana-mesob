@@ -12,17 +12,29 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # proje
 BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
 
 app = Flask(__name__, static_folder=None)
+
+# Database: use PostgreSQL in production (DATABASE_URL), fallback to SQLite locally
+database_url = os.environ.get('DATABASE_URL')
+if database_url and database_url.startswith('postgres://'):
+    # Heroku/Neon compatibility: postgres:// -> postgresql://
+    database_url = database_url.replace('postgres://', 'postgresql://', 1)
+
 app.config.update(
     # Secret from environment; dev fallback keeps local runs working.
     SECRET_KEY=os.environ.get('SECRET_KEY', 'mesob-one-dev-secret-change-in-prod'),
     PERMANENT_SESSION_LIFETIME=timedelta(hours=8),
     MAX_CONTENT_LENGTH=16 * 1024 * 1024,  # 16 MB upload cap
     UPLOAD_FOLDER=os.path.join(BACKEND_DIR, 'uploads'),
-    SQLALCHEMY_DATABASE_URI=f"sqlite:///{os.path.join(BACKEND_DIR, 'db.sqlite')}",
+    SQLALCHEMY_DATABASE_URI=database_url or f"sqlite:///{os.path.join(BACKEND_DIR, 'db.sqlite')}",
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
+    SQLALCHEMY_ENGINE_OPTIONS={
+        'pool_pre_ping': True,
+        'pool_recycle': 300,
+    },
 )
-CORS(app, supports_credentials=True, origins=[
-    'http://localhost:5000', 'http://127.0.0.1:5000'])
+# CORS origins from env (comma-separated) with local defaults
+cors_origins = os.environ.get('CORS_ORIGINS', 'http://localhost:5000,http://127.0.0.1:5000')
+CORS(app, supports_credentials=True, origins=[o.strip() for o in cors_origins.split(',')])
 
 db.init_app(app)
 
